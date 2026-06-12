@@ -1,0 +1,16 @@
+{
+  "tools": [
+    {
+      "tool_name": "read_file",
+      "file_path": "path/to/file.txt"
+    },
+    {
+      "tool_name": "structure_report",
+      "dir" : "path/to/"
+    },
+    {
+      "tool_name": "list_folder",
+      "folder_path": "path/to/"
+    }
+  ]
+}
