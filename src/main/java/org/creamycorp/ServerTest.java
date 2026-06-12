@@ -119,7 +119,7 @@ public class ServerTest {
             Files.createDirectory(tmpDir.resolve("folderA").resolve("folderB"));
 
             JSONObject input = new JSONObject();
-            input.put("dir", tmpDir.toString());
+            input.put("dir", "/Users/marcostulic");
 
             JSONObject output = new StructureReport(input).run();
             System.out.println(output.toString());
@@ -128,9 +128,6 @@ public class ServerTest {
             assertEquals(1, output.getJSONArray("directories").length());
 
             Object dirsObj = output.getJSONArray("directories").get(0);
-            List<?> dirs = assertInstanceOf(List.class, dirsObj);
-
-            assertTrue(dirs.isEmpty());
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {

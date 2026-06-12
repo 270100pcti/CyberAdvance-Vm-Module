@@ -1,6 +1,7 @@
 package org.creamycorp.tools;
 
 import org.creamycorp.ToolCall;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -15,24 +16,30 @@ public class StructureReport implements ToolCall {
         dirPath = obj.optString("dir", "");
     }
 
-    public static List<String> climbDir(File dir) {
-        File[] children = dir.listFiles();
-        if (children == null) {
-            return List.of(dir.getName());
-        }
-
-        List<File> dir_list = Stream.of(children)
-                .filter(File::isDirectory)
+    public static JSONArray climbDir(File dir) {
+        List<File> dir_list = Stream.of(dir.listFiles())
+                .filter(x -> x.isDirectory())
+                .toList();
+        List<File> file_list = Stream.of(dir.listFiles())
+                .filter(x -> x.isFile())
                 .toList();
 
-        ArrayList<String> dirs = new ArrayList<>();
-        dirs.add(dir.getName());
-        for (File f : dir_list) {
-            dirs.add(f.getName());
-            dirs.addAll(climbDir(f));
+        JSONArray files = new JSONArray();
+
+        files.put(dir.getPath());
+
+        for (File fc : file_list) {
+            files.put(fc.getPath());
         }
 
-        return dirs;
+        for (File ff : dir_list) {
+            JSONArray subArray = climbDir(ff);
+            for (int i = 0; i < subArray.length(); i++) {
+                files.put(subArray.get(i));
+            }
+        }
+
+        return files;
     }
 
     @Override
@@ -45,7 +52,7 @@ public class StructureReport implements ToolCall {
             return obj;
         }
 
-        obj.append("directories",climbDir(dir));
+        obj.append("directories",dir);
 
         return obj;
     }
