@@ -1,5 +1,6 @@
 package org.creamycorp;
 
+import org.creamycorp.tools.FindFilesTool;
 import org.creamycorp.tools.ListDirTool;
 import org.creamycorp.tools.ReadFileTool;
 import org.creamycorp.tools.StructureReport;
@@ -100,6 +101,44 @@ public class ServerTest {
         } finally {
             try {
                 Files.deleteIfExists(tmpFile);
+            } catch (IOException ignored) {
+            }
+        }
+    }
+
+    @Test
+    public void testFindFilesTool() {
+        Path tmpDir;
+        try {
+            tmpDir = Files.createTempDirectory("find_files_testing");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            Path topLevel = Files.createFile(tmpDir.resolve("top.txt"));
+            Path nestedDir = Files.createDirectory(tmpDir.resolve("nested"));
+            Path nestedFile = Files.createFile(nestedDir.resolve("deep.txt"));
+
+            JSONObject input = new JSONObject();
+            input.put("matches", new org.json.JSONArray().put("top"));
+            input.put("base_dir", tmpDir.toString());
+
+            JSONObject output = new FindFilesTool(input).run();
+            System.out.println(output.toString());
+
+            assertTrue(output.has("found"));
+            assertEquals(1, output.getJSONArray("found").length());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try (var stream = Files.walk(tmpDir)) {
+                stream.sorted(Comparator.reverseOrder()).forEach(path -> {
+                    try {
+                        Files.deleteIfExists(path);
+                    } catch (IOException ignored) {
+                    }
+                });
             } catch (IOException ignored) {
             }
         }

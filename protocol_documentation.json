@@ -2,15 +2,25 @@
   "tools": [
     {
       "tool_name": "read_file",
-      "file_path": "path/to/file.txt"
+      "file_path": "path/to/file.txt",
+      "intent" : "Read the source code files"
     },
     {
       "tool_name": "structure_report",
-      "dir" : "path/to/"
+      "dir" : "path/to/",
+      "intent" : "Understanding the project"
     },
     {
       "tool_name": "list_folder",
-      "folder_path": "path/to/"
+      "folder_path": "path/to/",
+      "intent" : "Search for all the classes in the project"
+    },
+    {
+      "tool_name": "find_files",
+      "match_strings_plaintext" : ["test", "testing", "unit_test"],
+      "base_dir" : "/path/to",
+      "intent" : "To find the files related to testing"
     }
+
   ]
 }
