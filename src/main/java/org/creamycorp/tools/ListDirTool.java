@@ -15,7 +15,7 @@ public class ListDirTool implements ToolCall {
     private final String dirPath;
 
     public ListDirTool(JSONObject obj) {
-        dirPath = obj.getString("folder_path") == null ? "" : obj.getString("folder_path");
+        dirPath = obj.getString("path") == null ? "" : obj.getString("path");
     }
     @Override
     public JSONObject run() {

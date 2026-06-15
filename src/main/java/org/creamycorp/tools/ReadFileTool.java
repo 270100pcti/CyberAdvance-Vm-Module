@@ -12,7 +12,7 @@ public class ReadFileTool implements ToolCall {
     private final String filePath;
 
     public ReadFileTool(JSONObject obj) {
-        filePath = obj.getString("file_path") == null ? "" : obj.getString("file_path");
+        filePath = obj.getString("path") == null ? "" : obj.getString("path");
     }
     @Override
     public JSONObject run() {

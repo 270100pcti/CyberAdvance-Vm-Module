@@ -13,7 +13,7 @@ public class StructureReport implements ToolCall {
     private final String dirPath;
 
     public StructureReport(JSONObject obj) {
-        dirPath = obj.optString("dir", "");
+        dirPath = obj.optString("path", "");
     }
 
     public static JSONArray climbDir(File dir) {

@@ -20,7 +20,7 @@ public class FindFilesTool implements ToolCall {
             matches.add(arr.get(i).toString());
         }
 
-        baseDir = obj.getString("base_dir") == null ? "" : obj.getString("base_dir");
+        baseDir = obj.getString("path") == null ? "" : obj.getString("path");
     }
 
     public static List<File> climbDir(File dir) {
