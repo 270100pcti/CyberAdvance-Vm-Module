@@ -52,6 +52,11 @@ public class FindFilesTool implements ToolCall {
         File dir = new File(baseDir);
         JSONObject obj = new JSONObject();
 
+        if (!dir.exists()) {
+            obj.append("Error", "File path does not exist");
+            return obj;
+        }
+
         List<File> allFiles = climbDir(dir);
 
         List<String> paths = allFiles.stream()

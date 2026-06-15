@@ -17,6 +17,7 @@ public class ReadFileTool implements ToolCall {
     @Override
     public JSONObject run() {
         JSONObject obj = new JSONObject();
+
         try {
             List<String> lines = Files.readAllLines(Paths.get(filePath));
             String linesConcat = String.join("\n", lines);
